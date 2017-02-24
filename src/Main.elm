@@ -2,6 +2,7 @@ module Main exposing (..)
 
 import Components.SkillPicker as SkillPicker exposing (viewSkillPicker)
 import Types.Heroes as Heroes exposing (..)
+import Types.Skills as Skills exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
@@ -32,12 +33,13 @@ subscriptions state =
 type alias State =
     { selectedHero : Hero
     , highlightedSkill : Maybe Skill
+    , selectedUpgrades : List Skill
     }
 
 
 state : State
 state =
-    State tripp Nothing
+    State tripp Nothing [ powerSurge, fullCharge ]
 
 
 
@@ -89,7 +91,7 @@ view state =
             ]
         , div [ class "row skill-picker-row" ]
             [ div [ class "col-xs-10 col-xs-offset-2" ]
-                [ SkillPicker.viewSkillPicker SkillPickerAction state.selectedHero state.highlightedSkill ]
+                [ SkillPicker.viewSkillPicker SkillPickerAction state.selectedHero state.highlightedSkill state.selectedUpgrades ]
             ]
         , div [ class "row" ]
             [ div [ class "col-xs-12" ]
@@ -120,4 +122,3 @@ viewHeroCard hero selectedHero =
                 [ text hero.name ]
             ]
         ]
-
