@@ -1,0 +1,54 @@
+@import "./vars.less";
+
+.hero-card-row {
+    height: 100px;
+    z-index: 20;
+    position: relative;
+}
+.hero-card-box {
+    width:100px;
+    height:100px;
+    float: left;
+}
+.hero-card {
+    margin: 5px;
+    overflow: hidden;
+    height:100px;
+
+    .general-transition;
+
+    border: @bright-blue solid 2px; // init state for selected border
+    &:hover {
+        border-width: 3px;
+        background-position-y: -45px;
+        height: 190px !important;
+        margin-top: -10px;
+    }
+    &.selected {
+        border-width: 5px;
+        height: 110px;
+    }
+
+    // name text
+    text-align: center;
+    .hero-card-name {
+        font-size: 20px;
+        color: @light-grey;
+        margin-top: 143px;
+        display: block;
+        background-color: @medium-dark-blue;
+
+    }
+    &.selected {
+        .hero-card-name {
+            margin-top:139px;
+        }
+    }
+}
+
+.progress-bar {
+    background-color: @medium-blue;
+}
+.export {
+    width: 400px !important;
+}

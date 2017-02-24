@@ -1,0 +1,76 @@
+// palette
+@blue: #002255;
+@medium-blue: #447799;
+@medium-dark-blue: #113355;
+@dark-blue: #112233;
+@bright-blue: #99dddd;
+@light-grey: #eeeeee;
+@medium-grey: #cccccc;
+
+// usually for animating simple hover/select
+.general-transition {
+    transition: .2s linear;
+}
+.fader {
+    // start state
+    opacity: 1;
+
+    &.ng-hide-add, &.ng-hide-remove {
+        transition: all 0.1s linear;
+    }
+    // end state
+    &.ng-hide {
+        opacity: 0;
+    }
+}
+
+
+// make a glyph icon into something magical
+.iconify {
+    color: @bright-blue;
+    border: 2px solid @bright-blue;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background: @medium-blue;
+    padding: 3px 0 0 7px;
+}
+
+// glowing border animation
+@keyframes pulsingShadow {
+    from {
+        box-shadow: none;
+    }
+    to {
+        box-shadow: 0 0 24px @bright-blue;
+    }
+}
+.glowing-border {
+    animation: 1s pulsingShadow infinite alternate;
+
+    // stop ng animate from picking up the animation (so it doesnt wait for completion on hide)
+    .ng-animate {
+        animation: none 0s;
+    }
+}
+
+.matte-box {
+    color: @light-grey;
+    background-color: @dark-blue;
+    border-color: @medium-blue;
+}
+.dark-blue-box {
+    color: @light-grey;
+    border-color:@medium-dark-blue;
+    background-color: @dark-blue;
+}
+.med-blue-box {
+    color: @light-grey;
+    border-color: @medium-blue;
+    background-color: @medium-dark-blue;
+}
+.highlighted-box {
+    border-color: @bright-blue;
+    background-color: @medium-blue;
+    color:@bright-blue;
+}

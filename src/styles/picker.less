@@ -1,0 +1,176 @@
+@import "./vars.less";
+
+.skill-picker-row {
+    z-index: 19;
+    position: relative;
+    border: 3px solid;
+    .matte-box;
+    padding:30px 0 40px;
+    height: 230px;
+}
+.action-bar {
+    width: 920px;
+    margin: 30px auto 0;
+}
+
+.action-bar-skill {
+    width: 104px;
+    height: 114px;
+    border: 2px @medium-blue solid;
+    float:left;
+    margin-right:10px;
+    position:relative;
+    color: @medium-blue;
+
+
+
+    &.highlighted {
+        margin: -3px 7px 0 -3px;
+        border-color: @bright-blue;
+        border-width: 5px;
+        width: 110px;
+        height: 120px;
+        color: @bright-blue;
+    }
+    &:hover {
+        color: @bright-blue;
+        border-color: @bright-blue;
+    }
+
+    .skill-available {
+        .iconify;
+        position: absolute;
+        left: 35px;
+        top: 95px;
+        z-index: 10;
+    }
+    .skill-key {
+        position: absolute;
+        top: -28px;
+        left: 40px;
+        margin-left: -15px;
+        width: 50px;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 20px;
+    }
+
+    // skill path at a glance
+    .minitree {
+        width:100%;
+        height: 10px;
+        div {
+            width:50%;
+            height:6px;
+            background: @medium-dark-blue;
+            float:left;
+        }
+        & > div {
+            padding-bottom:5px;
+            height: 10px;
+            & > div {
+                border-bottom: 1px @medium-dark-blue solid;
+            }
+        }
+        .selected {
+            .general-transition;
+            background: @bright-blue;
+        }
+    }
+    .skill-tooltip {
+        top: 100%;
+        right: -120px;
+    }
+}
+
+.action-bar-passive {
+    width: 80px;
+    height: 80px;
+    float: left;
+    margin: 17px 5px 0 0;
+    position: relative;
+    .med-blue-box;
+    border: 2px solid @medium-blue;
+
+    &.highlighted {
+        margin: 14px 2px 0 -3px;
+        .highlighted-box;
+        border-width: 5px;
+        width: 86px;
+        height: 86px;
+    }
+    &.available:not(.selected):not(.highlighted) {
+        .highlighted-box;
+    }
+
+    .general-transition;
+    .passive-icon {
+        .iconify;
+        position: absolute;
+        left: 24px;
+        top: 24px;
+        z-index: 10;
+    }
+    .passive-level-req {
+        display:block;
+        width:40px;
+        height:40px;
+        border-radius:20px;
+        background-color: @medium-blue;
+        color: @light-grey;
+        text-align: center;
+        padding-top:10px;
+        margin: 17px;
+    }
+    .passive-options {
+        border: 2px solid;
+        .med-blue-box;
+        position:absolute;
+        top: 81px;
+        right: 0;
+        z-index: 15;
+
+        .general-transition;
+
+
+        dl.passive-option {
+            width: 340px;
+            height: 80px;
+            padding: 10px;
+            border-bottom: 2px @medium-blue solid;
+            margin-bottom: 0;
+
+            .skill-tooltip {
+                left: 4px;
+                right: auto;
+                top: 100%;
+            }
+
+            &:not(.hot) {
+                cursor: auto;
+            }
+            &:not(.hot):not(.selected) {
+                color: @medium-grey;
+            }
+
+            dd {
+                font-size: 0.9em;
+            }
+            &.hot:hover, &.selected {
+                background: @medium-blue;
+
+                dd {
+                    color:@bright-blue;
+                }
+            }
+        }
+    }
+    &.ng-animate {
+        transition: none 0s;
+    }
+    .skill-tooltip {
+        top: 100%;
+        right: 0;
+        left: auto;
+    }
+}

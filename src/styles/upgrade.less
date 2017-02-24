@@ -1,0 +1,213 @@
+@import "./vars.less";
+
+.action-bar-upgrade {
+    position:absolute;
+    width: 340px;
+    height: 90px;
+    border:4px @medium-blue solid;
+    bottom: -130px;
+    background-color: @medium-dark-blue;
+    color: @light-grey;
+
+    dd {
+        font-size: .9em;
+    }
+    &:hover:not(.sib-selected) {
+        background-color: @medium-blue;
+        border-color: @bright-blue;
+    }
+    .upgrade-selected {
+        display:none;
+    }
+    &.selected {
+        border-color: @bright-blue;
+        background-color: @medium-blue;
+        dd {
+            color: @bright-blue;
+        }
+        .upgrade-selected {
+            display:block;
+            .iconify;
+            margin: 16px;
+        }
+    }
+    &.sib-selected {
+        opacity: .8;
+    }
+    .general-transition;
+    strong .skill-tooltip {
+        top: 100%;
+        left: -4px;
+    }
+
+}
+
+.action-bar-upgrade:nth-child(1) {
+    right: 80px;
+    padding: 5px 84px 5px 5px;
+    &.selected {
+        padding: 5px;
+    }
+    .upgrade-selected {
+        float: right;
+    }
+    .action-bar-upgrade:nth-child(1) {
+        right: 80px;
+    }
+    .action-bar-upgrade:nth-child(2) {
+        left: 320px;
+        .upgrade-selected {
+            float: left;
+        }
+
+    }
+}
+.action-bar-upgrade:nth-child(2) {
+    left: 80px;
+    padding: 5px 5px 5px 84px;
+    &.selected {
+        padding: 5px;
+    }
+    .upgrade-selected {
+        float: left;
+    }
+
+    .action-bar-upgrade:nth-child(1) {
+        right: 320px;
+        .upgrade-selected {
+            float: right;
+        }
+    }
+    .action-bar-upgrade:nth-child(2) {
+        left: 80px;
+    }
+}
+
+// just playin around with css drawing
+.line {
+    height: 5px;
+    position: absolute;
+    width: 25px;
+    background: @medium-blue;
+
+    .selected > & {
+        background: @bright-blue;
+        z-index:5;
+    }
+    &.vertical {
+        -webkit-transform-origin: 0 50%;
+        -moz-transform-origin: 0 50%;
+        transform-origin: 0 50%;
+        transform: rotate(90deg);
+    }
+
+    &.vertical.root {
+        right: 80px;
+        top: -30px;
+    }
+    &.horizontal {
+        width: 144px;
+        right: -37px;
+        top: -28px;
+
+        .action-bar-upgrade .action-bar-upgrade & {
+            width: 148px;
+            right: -41px;
+        }
+    }
+    &.vertical.branch {
+        right: -51px;
+        top: -42px;
+        width: 16px;
+
+        .action-bar-upgrade .action-bar-upgrade & {
+            right: -59px;
+        }
+
+    }
+    .right-tree & {
+        &.vertical.root {
+            left: 100px;
+            top: -30px;
+        }
+        &.horizontal {
+            width: 137px;
+            right: 230px;
+            top: -28px;
+
+            .action-bar-upgrade .action-bar-upgrade & {
+                width:138px;
+                right: 230px;
+            }
+        }
+        &.vertical.branch {
+            left: -33px;
+            top: -43px;
+            width: 17px;
+        }
+    }
+
+}
+
+// the left-most tree is special because of left edge positioning
+.action-bar-skill:nth-child(1) {
+    .action-bar-upgrade:nth-child(1) {
+        right: 12px;
+        .line.vertical.branch {
+            right: 18px;
+        }
+        .line.horizontal {
+            right: 32px;
+            width: 75px;
+        }
+        .action-bar-upgrade:nth-child(1) {
+            right: 2px;
+            .line.vertical.branch {
+                right: 10px;
+            }
+            .line.horizontal {
+                right: 24px;
+                width: 83px;
+            }
+        }
+        .action-bar-upgrade:nth-child(2) {
+            left:398px;
+            .right-tree .line.horizontal {
+                width: 206px;
+                right: 230px;
+            }
+        }
+    }
+    .action-bar-upgrade:nth-child(2) {
+        left: 148px;
+        .right-tree {
+            .line {
+                &.vertical.branch {
+                    left: -102px;
+                }
+                &.horizontal {
+                    width: 207px;
+                }
+            }
+        }
+        .action-bar-upgrade:nth-child(1) {
+            right: 320px;
+            .line.vertical.branch {
+                right: -60px;
+            }
+            .line.horizontal {
+                right: -46px;
+                width: 153px;
+            }
+        }
+        .action-bar-upgrade:nth-child(2) {
+            left: 80px;
+            .line.vertical.branch {
+                left: -32px;
+            }
+            .line.horizontal {
+                width: 137px;
+            }
+        }
+    }
+}

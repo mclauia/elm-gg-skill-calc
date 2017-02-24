@@ -1,0 +1,99 @@
+.hero-portrait {
+    background: transparent no-repeat center -95px;
+    &.tripp {
+        background-image: url('../img/heroes/tripp/portrait.png');
+    }
+    &.aisling {
+        background-image: url('../img/heroes/aisling/portrait.png');
+    }
+    &.tyto {
+        background-image: url('../img/heroes/tyto/portrait.png');
+    }
+    &.wu {
+        background-image: url('../img/heroes/wu/portrait.png');
+        background-position: -28px -95px; // wu has a wide froglike face
+    }
+}
+.hero-icon {
+    background: transparent no-repeat 0 0;
+
+    // icons by character
+    &.tripp {
+        background-image: url('../img/heroes/tripp/icons.png');
+    }
+    &.aisling {
+        background-image: url('../img/heroes/aisling/icons.png');
+    }
+    &.tyto {
+        background-image: url('../img/heroes/tyto/icons.png');
+    }
+    &.wu {
+        background-image: url('../img/heroes/wu/icons.png');
+    }
+    // preloading iconsets for nice swapping
+    &:after {
+        content: url('../img/heroes/tripp/icons.png') url('../img/heroes/aisling/icons.png') url('../img/heroes/tyto/icons.png') url('../img/heroes/wu/icons.png');
+        display:none;
+    }
+
+    // large icons
+    &.icon-lg {
+        width: 100px;
+        height: 100px;
+    }
+    &.icon-lg.lmb {
+        background-position: 0 -130px;
+    }
+    &.icon-lg.rmb {
+        background-position: -100px -130px;
+    }
+    &.icon-lg.q {
+        background-position: -200px -130px;
+    }
+    &.icon-lg.e {
+        background-position: -300px -130px;
+    }
+    &.icon-lg.f {
+        background-position: -400px -130px;
+    }
+
+    // small icons
+    &.icon-sm {
+        width: 65px;
+        height: 65px;
+    }
+    &.icon-sm.lmb {
+        background-position: -65px -65px;
+    }
+    &.icon-sm.rmb {
+        background-position: -130px -65px;
+    }
+    &.icon-sm.q {
+        background-position: -195px -65px;
+    }
+    &.icon-sm.e {
+        background-position: -260px -65px;
+    }
+    &.icon-sm.f {
+        background-position: -325px -65px;
+    }
+
+    // greyed out small icons
+    &.icon-sm.grey.lmb {
+        background-position: -65px 0;
+    }
+    &.icon-sm.grey.rmb {
+        background-position: -130px 0;
+    }
+    &.icon-sm.grey.q {
+        background-position: -195px 0;
+    }
+    &.icon-sm.grey.e {
+        background-position: -260px 0;
+    }
+    &.icon-sm.grey.f {
+        background-position: -325px 0;
+    }
+
+}
+

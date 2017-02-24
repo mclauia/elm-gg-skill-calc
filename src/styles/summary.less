@@ -1,0 +1,38 @@
+@import './vars.less';
+
+.summary {
+    border: 3px solid;
+    .matte-box;
+    height: 500px;
+    padding-top: 15px;
+
+    .summary-skill {
+        float:left;
+        width: 49%;
+        height: 150px;
+        padding-right: 10px;
+        padding-left: 10px;
+        margin-bottom: 10px;
+        font-size: 13px;
+        position:relative;
+        border-bottom: 2px @medium-blue solid;
+
+        &:last-child {
+            border:none;
+        }
+
+        .skill-tooltip {
+            top: 100%;
+            left: 4px;
+        }
+
+        .action-bar-skill.hero-icon.icon-lg {
+            height:104px;
+            margin-bottom:44px;
+        }
+
+        dl {
+            margin-bottom:0px;
+        }
+    }
+}

@@ -1,0 +1,181 @@
+@import './vars.less';
+
+th:last-child .level-icon {
+    padding-left: 5px;
+}
+
+.timeline {
+    .level-icon {
+        margin: 0 auto;
+        padding-left: 9px;
+        border-color:@medium-blue;
+        &.hot {
+            border-color:@bright-blue;
+            &.highlighted {
+                .glowing-border;
+            }
+        }
+    }
+    .slice-indicator {
+        position: absolute;
+        top: -2px;
+        left: 50%;
+        margin-left:-15px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 14px 15px 0 15px;
+        border-color: @bright-blue transparent transparent transparent;
+
+    }
+
+    dl.timeline-skill {
+        &.highlighted, &:hover {
+            .highlighted-box;
+            & > dd {
+                border-color:@bright-blue;
+            }
+        }
+        width: 200px;
+        & > dt {
+            float: left;
+            margin-top: 22px;
+        }
+        & > dd {
+            float: left;
+            width: 69px;
+            height: 69px;
+            margin-right:10px;
+            border: 2px solid;
+            .med-blue-box;
+        }
+        .skill-tooltip {
+            right: auto;
+            left: 2px;
+            top: 2px;
+            .general-transition;
+        }
+
+    }
+    table {
+        table-layout: fixed;
+        color: @medium-blue;
+        border: 2px solid @medium-blue;
+        background-color: @dark-blue;
+
+        th, td {
+            width: 94px;
+            &:nth-child(1) {
+                width: 200px;
+            }
+            position:relative;
+        }
+        thead tr th {
+            border-bottom: 2px solid @medium-blue;
+            position:relative;
+        }
+        tbody tr td {
+            border-bottom: 1px solid @medium-blue;
+        }
+
+        h4 {
+            color: @bright-blue;
+        }
+        tr.timeline-passive-row {
+            p {
+                margin: 4px 0 0 10px;
+            }
+
+            .highlighted {
+                color: @bright-blue;
+            }
+            .slice-indicator {
+                border-width: 0 15px 14px 15px;
+                border-color: transparent transparent @bright-blue transparent;
+                bottom: -2px;
+                top: auto;
+                left: 25%;
+
+                &.plus-one {
+                    left: 75%;
+                }
+            }
+            .skill-tooltip {
+                top: 100%;
+            }
+        }
+    }
+}
+
+.tinytree {
+    width: 44px;
+    height: 44px;
+    margin: 11px auto 0;
+    border: 2px solid;
+    cursor: help;
+
+    .med-blue-box;
+    &:hover, &.highlighted {
+        border-color: @bright-blue;
+    }
+
+    .general-transition;
+
+    div {
+        float:left;
+    }
+    &.hot > div {
+        background-color: @bright-blue;
+        .selected {
+            background-color: @bright-blue;
+        }
+        & > div.left, & > div.right {
+            background-color: @bright-blue;
+        }
+    }
+    &:not(.hot) .selected {
+        background-color:@medium-blue;
+    }
+
+    & > div {
+        width:20px;
+        height: 40px;
+        padding-bottom: 20px;
+        background-color: @medium-blue;
+        &.right {
+            margin-left:20px;
+        }
+        &.focus-skill {
+            & > div {
+                display:none;
+            }
+        }
+        & > div {
+            background-color: @medium-dark-blue;
+            width: 10px;
+            height: 20px;
+        }
+        & > div.left, & > div.right {
+            background-color: @medium-blue;
+            width: 10px;
+        }
+        & > div.right {
+            margin-left: 10px;
+
+            /* @todo dont need this?
+            &:before {
+                width:10px;
+                height:20px;
+                background-color: @medium-dark-blue;
+            }
+            */
+        }
+    }
+    .skill-tooltip {
+        top:80%;
+        right: -120px;
+        .general-transition;
+    }
+
+}
+
