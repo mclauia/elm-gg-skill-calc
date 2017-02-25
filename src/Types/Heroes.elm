@@ -14,10 +14,10 @@ tripp =
     Hero "Tripp"
         (SkillSet
             (lightningStrikes)
-            (Skill "Lightning Strikes 2" "its a strike" (Just (Upgrades (Skill "Lightning Strikes 2L" "its a strike" Nothing) (Skill "Lightning Strikes 2R" "its a strike" Nothing))))
-            (Skill "Lightning Strikes3" "its a strike" (Just (Upgrades (Skill "Lightning Strikes 3L" "its a strike" Nothing) (Skill "Lightning Strikes 3R" "its a strike" Nothing))))
-            (Skill "Lightning Strikes4" "its a strike" (Just (Upgrades (Skill "Lightning Strikes 4L" "its a strike" Nothing) (Skill "Lightning Strikes 4R" "its a strike" Nothing))))
-            (Skill "Lightning Strikes5" "its a strike" (Just (Upgrades (Skill "Lightning Strikes 5L" "its a strike" Nothing) (Skill "Lightning Strikes 5R" "its a strike" Nothing))))
+            (Skill "Lightning Strikes 2" "its a strike" (Just (UpgradePair (Skill "Lightning Strikes 2L" "its a strike" Nothing) (Skill "Lightning Strikes 2R" "its a strike" Nothing))))
+            (Skill "Lightning Strikes3" "its a strike" (Just (UpgradePair (Skill "Lightning Strikes 3L" "its a strike" Nothing) (Skill "Lightning Strikes 3R" "its a strike" Nothing))))
+            (Skill "Lightning Strikes4" "its a strike" (Just (UpgradePair (Skill "Lightning Strikes 4L" "its a strike" Nothing) (Skill "Lightning Strikes 4R" "its a strike" Nothing))))
+            (Skill "Lightning Strikes5" "its a strike" (Just (UpgradePair (Skill "Lightning Strikes 5L" "its a strike" Nothing) (Skill "Lightning Strikes 5R" "its a strike" Nothing))))
         )
 
 
@@ -25,13 +25,13 @@ lightningStrikes =
     Skill
         "Lightning Strikes 1"
         "its a strike"
-        (Just (Upgrades powerSurge unseenStrike))
+        (Just (UpgradePair powerSurge unseenStrike))
 
 
 powerSurge =
     Skill "Power Surge"
         "its a dddddd"
-        (Just (Upgrades overload fullCharge))
+        (Just (UpgradePair overload fullCharge))
 
 
 overload =
@@ -45,7 +45,7 @@ fullCharge =
 unseenStrike =
     Skill "Unseen Strike"
         "its a ssssss"
-        (Just (Upgrades assassinsCredo arterialRout))
+        (Just (UpgradePair assassinsCredo arterialRout))
 
 
 assassinsCredo =

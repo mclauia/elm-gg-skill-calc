@@ -3,10 +3,10 @@ module Components.SkillPicker exposing (..)
 import Components.SkillPickerUpgrade as SkillPickerUpgrade exposing (viewSkillPickerUpgrade)
 import Types.Heroes as Heroes exposing (..)
 import Types.Skills as Skills exposing (..)
+import Utils.Skills as SkillUtils exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
-import Debug exposing (log)
 
 
 type Action
@@ -23,7 +23,12 @@ update action state =
     case action of
         Highlight skill ->
             --let
-            --  nextThing = ManageAssets.update manageAction state
+            --    nextHighlightedSkill =
+            --        case state.highlightedSkill of
+            --            Just highlightedSkill ->
+            --                if skill == highlightedSkill then Nothing else Just skill
+            --            Nothing ->
+            --                Just skill
             --in
             ( { state
                 | highlightedSkill = Just skill
@@ -81,7 +86,7 @@ viewSkillPickerNode actionContext key heroName skill isHighlighted selectedUpgra
                 []
             ]
         , if isHighlighted then
-            SkillPickerUpgrade.viewSkillPickerUpgrade skill.upgrades
+            SkillPickerUpgrade.viewSkillPickerUpgrade skill.upgrades selectedUpgrades
           else
             text ""
           -- @todo skill upgrade path
@@ -101,19 +106,19 @@ viewMiniTree skill selectedUpgrades =
         )
 
 
-viewUpgradeChildren : Upgrades -> List Skill -> List (Html a)
+viewUpgradeChildren : UpgradePair -> List Skill -> List (Html a)
 viewUpgradeChildren upgrades selectedUpgrades =
     [ viewMiniTreeUpgrade Left upgrades selectedUpgrades
     , viewMiniTreeUpgrade Right upgrades selectedUpgrades
     ]
 
 
-viewMiniTreeUpgrade : UpgradePath -> Upgrades -> List Skill -> Html a
+viewMiniTreeUpgrade : UpgradePath -> UpgradePair -> List Skill -> Html a
 viewMiniTreeUpgrade side upgrades selectedUpgrades =
     let
         upgrade =
             case upgrades of
-                Upgrades left right ->
+                UpgradePair left right ->
                     case side of
                         Left ->
                             left
@@ -137,17 +142,3 @@ viewMiniTreeUpgrade side upgrades selectedUpgrades =
                 Nothing ->
                     []
             )
-
-
-isSkillUpgradeSelected : Skill -> List Skill -> Bool
-isSkillUpgradeSelected upgrade selectedUpgrades =
-    let
-        upgrade_ =
-            log "upgrade" upgrade
-
-        selectedUpgrades_ =
-            (log "selectedUpgrades" selectedUpgrades)
-    in
-        List.any (\selectedUpgrade -> upgrade_ == selectedUpgrade) selectedUpgrades_
-
-

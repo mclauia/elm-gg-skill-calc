@@ -6,8 +6,8 @@ type UpgradePath
     | Right
 
 
-type Upgrades
-    = Upgrades Skill Skill
+type UpgradePair
+    = UpgradePair Skill Skill
 
 
 type alias SkillSet =
@@ -22,5 +22,5 @@ type alias SkillSet =
 type alias Skill =
     { name : String
     , description : String
-    , upgrades : Maybe Upgrades
+    , upgrades : Maybe UpgradePair
     }
