@@ -2,12 +2,24 @@ module Components.SkillPickerUpgrade exposing (..)
 
 import Types.Skills as Skills exposing (..)
 import Utils.Skills as SkillUtils exposing (..)
+import Utils.Markup exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 
 
-viewSkillPickerUpgrade : Maybe UpgradePair -> List Skill -> Html a
-viewSkillPickerUpgrade mbUpgrades selectedUpgrades =
+type Action = SelectSkillUpgrade Skill
+
+update : Action -> a -> (a, Cmd a)
+update action state =
+    case action of
+        SelectSkillUpgrade skill ->
+            ( state
+            , Cmd.none
+            )
+
+viewSkillPickerUpgrade : (Action -> a) -> Maybe UpgradePair -> List Skill -> Html a
+viewSkillPickerUpgrade context mbUpgrades selectedUpgrades =
     case mbUpgrades of
         Just upgrades ->
             case upgrades of
@@ -26,17 +38,18 @@ viewSkillPickerUpgrade mbUpgrades selectedUpgrades =
                             (isSkillSiblingUpgradeSelected right upgrades selectedUpgrades)
                     in
                         div []
-                            [ viewUpgrade Left left upgrades isLeftSelected isLeftSiblingSelected selectedUpgrades
-                            , viewUpgrade Right right upgrades isRightSelected isRightSiblingSelected selectedUpgrades
+                            [ viewUpgrade context Left left upgrades isLeftSelected isLeftSiblingSelected selectedUpgrades
+                            , viewUpgrade context Right right upgrades isRightSelected isRightSiblingSelected selectedUpgrades
                             ]
 
         Nothing ->
             text ""
 
 
-viewUpgrade : UpgradePath -> Skill -> UpgradePair -> Bool -> Bool -> List Skill -> Html a
-viewUpgrade side skill upgradePair isSelected isSiblingSelected selectedUpgrades =
-    div [ class ("action-bar-upgrade" ++ selectedClass isSelected ++ sibSelectedClass isSiblingSelected) ]
+viewUpgrade context side skill upgradePair isSelected isSiblingSelected selectedUpgrades =
+    div [ class ("action-bar-upgrade" ++ selectedClass isSelected ++ sibSelectedClass isSiblingSelected)
+    , onClick (context (SelectSkillUpgrade skill))
+     ]
         [ viewUpgradeLines side skill isSelected
         , if isSelected then
             viewUpgradeCheckmark skill
@@ -45,14 +58,22 @@ viewUpgrade side skill upgradePair isSelected isSiblingSelected selectedUpgrades
         , dl []
             [ dt []
                 [ text skill.name ]
-            , dd [ attribute "desc" "upgrade.desc", attribute "game-tips" "" ]
-                []
+            , viewSkillDescription skill.description
             ]
         , if isSelected then
-            viewSkillPickerUpgrade skill.upgrades selectedUpgrades
+            viewSkillPickerUpgrade context skill.upgrades selectedUpgrades
           else
             text ""
         ]
+
+
+-- @todo text parsing / formatting / tooltipping in here
+viewSkillDescription : String -> Html msg
+viewSkillDescription description =
+    dd [ ]
+        [ text description
+        ]
+
 
 
 viewUpgradeCheckmark : Skill -> Html msg
@@ -87,18 +108,3 @@ whichTree side =
         Right ->
             "right-tree"
 
-
-selectedClass : Bool -> String
-selectedClass isSelected =
-    if isSelected then
-        " selected"
-    else
-        ""
-
-
-sibSelectedClass : Bool -> String
-sibSelectedClass isSelected =
-    if isSelected then
-        " sib-selected"
-    else
-        ""

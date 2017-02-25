@@ -1,9 +1,11 @@
 module Components.SkillPicker exposing (..)
 
-import Components.SkillPickerUpgrade as SkillPickerUpgrade exposing (viewSkillPickerUpgrade)
+import Components.SkillPickerUpgrade as SkillPickerUpgrade
 import Types.Heroes as Heroes exposing (..)
 import Types.Skills as Skills exposing (..)
 import Utils.Skills as SkillUtils exposing (..)
+import Utils.Markup exposing (..)
+
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
@@ -11,6 +13,7 @@ import Html.Events exposing (onClick)
 
 type Action
     = Highlight Skill
+    | SkillUpgradeAction SkillPickerUpgrade.Action
 
 
 type UpgradePath
@@ -35,16 +38,24 @@ update action state =
               }
             , Cmd.none
             )
+        SkillUpgradeAction upgradeAction ->
+            let
+                ( skillUpgradeState, skillUpgradeCmd ) =
+                    SkillPickerUpgrade.update upgradeAction state
+            in
+                ( skillUpgradeState
+                , Cmd.map SkillUpgradeAction skillUpgradeCmd
+                )
 
 
-viewSkillPicker : (Action -> a) -> Hero -> Maybe Skill -> List Skill -> Html a
-viewSkillPicker actionContext hero mbHighlightedSkill selectedUpgrades =
+viewSkillPicker : (Action -> a) -> Hero -> Maybe Skill -> List Skill -> Html Action
+viewSkillPicker context hero mbHighlightedSkill selectedUpgrades =
     div [ class "row action-bar", id "skill-picker" ]
-        [ viewSkillPickerNode actionContext "lmb" hero.name hero.skills.lmb (isHighlighted hero.skills.lmb mbHighlightedSkill) selectedUpgrades
-        , viewSkillPickerNode actionContext "rmb" hero.name hero.skills.rmb (isHighlighted hero.skills.rmb mbHighlightedSkill) selectedUpgrades
-        , viewSkillPickerNode actionContext "q" hero.name hero.skills.q (isHighlighted hero.skills.q mbHighlightedSkill) selectedUpgrades
-        , viewSkillPickerNode actionContext "e" hero.name hero.skills.e (isHighlighted hero.skills.e mbHighlightedSkill) selectedUpgrades
-        , viewSkillPickerNode actionContext "f" hero.name hero.skills.f (isHighlighted hero.skills.f mbHighlightedSkill) selectedUpgrades
+        [ viewSkillPickerNode context "lmb" hero.name hero.skills.lmb (isHighlighted hero.skills.lmb mbHighlightedSkill) selectedUpgrades
+        , viewSkillPickerNode context "rmb" hero.name hero.skills.rmb (isHighlighted hero.skills.rmb mbHighlightedSkill) selectedUpgrades
+        , viewSkillPickerNode context "q" hero.name hero.skills.q (isHighlighted hero.skills.q mbHighlightedSkill) selectedUpgrades
+        , viewSkillPickerNode context "e" hero.name hero.skills.e (isHighlighted hero.skills.e mbHighlightedSkill) selectedUpgrades
+        , viewSkillPickerNode context "f" hero.name hero.skills.f (isHighlighted hero.skills.f mbHighlightedSkill) selectedUpgrades
           --, @todo passives
         ]
 
@@ -58,9 +69,8 @@ isHighlighted skill mbHighlighted =
         Nothing ->
             False
 
-
 viewSkillPickerNode : (Action -> a) -> String -> String -> Skill -> Bool -> List Skill -> Html a
-viewSkillPickerNode actionContext key heroName skill isHighlighted selectedUpgrades =
+viewSkillPickerNode context key heroName skill isHighlighted selectedUpgrades =
     div
         [ class
             ("action-bar-skill hot"
@@ -70,7 +80,7 @@ viewSkillPickerNode actionContext key heroName skill isHighlighted selectedUpgra
                         ""
                    )
             )
-        , onClick (actionContext (Highlight skill))
+        , onClick (context (Highlight skill))
         ]
         [ span [ class "skill-key fonted" ]
             [ text key ]
@@ -86,15 +96,13 @@ viewSkillPickerNode actionContext key heroName skill isHighlighted selectedUpgra
                 []
             ]
         , if isHighlighted then
-            SkillPickerUpgrade.viewSkillPickerUpgrade skill.upgrades selectedUpgrades
+            SkillPickerUpgrade.viewSkillPickerUpgrade (context SkillUpgradeAction) skill.upgrades selectedUpgrades
           else
             text ""
-          -- @todo skill upgrade path
-          --<skill-upgrade upgrades="skill.upgrades" class="fader" ng-show="isSkillHighlighted(skill)"></skill-upgrade>
         ]
 
 
-viewMiniTree : Skill -> List Skill -> Html a
+viewMiniTree : Skill -> List Skill -> Html Action
 viewMiniTree skill selectedUpgrades =
     div [ class "minitree" ]
         (case skill.upgrades of
@@ -106,33 +114,26 @@ viewMiniTree skill selectedUpgrades =
         )
 
 
-viewUpgradeChildren : UpgradePair -> List Skill -> List (Html a)
+viewUpgradeChildren : UpgradePair -> List Skill -> List (Html Action)
 viewUpgradeChildren upgrades selectedUpgrades =
     [ viewMiniTreeUpgrade Left upgrades selectedUpgrades
     , viewMiniTreeUpgrade Right upgrades selectedUpgrades
     ]
 
 
-viewMiniTreeUpgrade : UpgradePath -> UpgradePair -> List Skill -> Html a
-viewMiniTreeUpgrade side upgrades selectedUpgrades =
+viewMiniTreeUpgrade : UpgradePath -> UpgradePair -> List Skill -> Html Action
+viewMiniTreeUpgrade side (UpgradePair left right) selectedUpgrades =
     let
         upgrade =
-            case upgrades of
-                UpgradePair left right ->
-                    case side of
-                        Left ->
-                            left
+            case side of
+                Left ->
+                    left
 
-                        Right ->
-                            right
+                Right ->
+                    right
     in
         div
-            [ class
-                (if isSkillUpgradeSelected upgrade selectedUpgrades then
-                    "selected"
-                 else
-                    ""
-                )
+            [ class (selectedClass (isSkillUpgradeSelected upgrade selectedUpgrades))
             ]
             -- unpack our upgrade children
             (case upgrade.upgrades of

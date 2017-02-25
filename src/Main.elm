@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Components.SkillPicker as SkillPicker exposing (viewSkillPicker)
+import Components.SkillPicker as SkillPicker
 import Types.Heroes as Heroes exposing (..)
 import Types.Skills as Skills exposing (..)
 import Html exposing (..)
