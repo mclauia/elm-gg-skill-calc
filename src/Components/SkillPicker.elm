@@ -21,7 +21,10 @@ type UpgradePath
     | Right
 
 
-update : Action -> { a | highlightedSkill : Maybe Skill } -> ( { a | highlightedSkill : Maybe Skill }, Cmd Action )
+update
+    : Action
+    -> { a | highlightedSkill : Maybe Skill, selectedUpgrades : List Skill }
+    -> ( { a | highlightedSkill : Maybe Skill, selectedUpgrades : List Skill }, Cmd Action )
 update action state =
     case action of
         Highlight skill ->
@@ -48,7 +51,7 @@ update action state =
                 )
 
 
-viewSkillPicker : (Action -> a) -> Hero -> Maybe Skill -> List Skill -> Html Action
+viewSkillPicker : (Action -> a) -> Hero -> Maybe Skill -> List Skill -> Html a
 viewSkillPicker context hero mbHighlightedSkill selectedUpgrades =
     div [ class "row action-bar", id "skill-picker" ]
         [ viewSkillPickerNode context "lmb" hero.name hero.skills.lmb (isHighlighted hero.skills.lmb mbHighlightedSkill) selectedUpgrades
@@ -96,13 +99,13 @@ viewSkillPickerNode context key heroName skill isHighlighted selectedUpgrades =
                 []
             ]
         , if isHighlighted then
-            SkillPickerUpgrade.viewSkillPickerUpgrade (context SkillUpgradeAction) skill.upgrades selectedUpgrades
+            SkillPickerUpgrade.viewSkillPickerUpgrade (\action -> context (SkillUpgradeAction action)) skill.upgrades selectedUpgrades
           else
             text ""
         ]
 
 
-viewMiniTree : Skill -> List Skill -> Html Action
+viewMiniTree : Skill -> List Skill -> Html a
 viewMiniTree skill selectedUpgrades =
     div [ class "minitree" ]
         (case skill.upgrades of
@@ -114,14 +117,14 @@ viewMiniTree skill selectedUpgrades =
         )
 
 
-viewUpgradeChildren : UpgradePair -> List Skill -> List (Html Action)
+viewUpgradeChildren : UpgradePair -> List Skill -> List (Html a)
 viewUpgradeChildren upgrades selectedUpgrades =
     [ viewMiniTreeUpgrade Left upgrades selectedUpgrades
     , viewMiniTreeUpgrade Right upgrades selectedUpgrades
     ]
 
 
-viewMiniTreeUpgrade : UpgradePath -> UpgradePair -> List Skill -> Html Action
+viewMiniTreeUpgrade : UpgradePath -> UpgradePair -> List Skill -> Html a
 viewMiniTreeUpgrade side (UpgradePair left right) selectedUpgrades =
     let
         upgrade =

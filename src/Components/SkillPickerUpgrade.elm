@@ -10,11 +10,16 @@ import Html.Events exposing (onClick)
 
 type Action = SelectSkillUpgrade Skill
 
-update : Action -> a -> (a, Cmd a)
+update
+    : Action
+    -> { a | selectedUpgrades : List Skill }
+    -> ({ a | selectedUpgrades : List Skill }, Cmd Action)
 update action state =
     case action of
         SelectSkillUpgrade skill ->
-            ( state
+            ( { state
+                | selectedUpgrades = skill :: state.selectedUpgrades
+            }
             , Cmd.none
             )
 
@@ -45,7 +50,15 @@ viewSkillPickerUpgrade context mbUpgrades selectedUpgrades =
         Nothing ->
             text ""
 
-
+viewUpgrade
+    : (Action -> a)
+    -> UpgradePath
+    -> Skill
+    -> UpgradePair
+    -> Bool
+    -> Bool
+    -> List Skill
+    -> Html a
 viewUpgrade context side skill upgradePair isSelected isSiblingSelected selectedUpgrades =
     div [ class ("action-bar-upgrade" ++ selectedClass isSelected ++ sibSelectedClass isSiblingSelected)
     , onClick (context (SelectSkillUpgrade skill))
