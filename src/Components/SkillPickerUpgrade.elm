@@ -8,20 +8,23 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
 
-type Action = SelectSkillUpgrade Skill
+type Action
+    = SelectSkillUpgrade Skill
 
-update
-    : Action
+
+update :
+    Action
     -> { a | selectedUpgrades : List Skill }
-    -> ({ a | selectedUpgrades : List Skill }, Cmd Action)
+    -> ( { a | selectedUpgrades : List Skill }, Cmd Action )
 update action state =
     case action of
         SelectSkillUpgrade skill ->
             ( { state
                 | selectedUpgrades = skill :: state.selectedUpgrades
-            }
+              }
             , Cmd.none
             )
+
 
 viewSkillPickerUpgrade : (Action -> a) -> Maybe UpgradePair -> List Skill -> Html a
 viewSkillPickerUpgrade context mbUpgrades selectedUpgrades =
@@ -50,8 +53,9 @@ viewSkillPickerUpgrade context mbUpgrades selectedUpgrades =
         Nothing ->
             text ""
 
-viewUpgrade
-    : (Action -> a)
+
+viewUpgrade :
+    (Action -> a)
     -> UpgradePath
     -> Skill
     -> UpgradePair
@@ -60,9 +64,10 @@ viewUpgrade
     -> List Skill
     -> Html a
 viewUpgrade context side skill upgradePair isSelected isSiblingSelected selectedUpgrades =
-    div [ class ("action-bar-upgrade" ++ selectedClass isSelected ++ sibSelectedClass isSiblingSelected)
-    , onClick (context (SelectSkillUpgrade skill))
-     ]
+    div
+        [ class ("action-bar-upgrade" ++ selectedClass isSelected ++ sibSelectedClass isSiblingSelected)
+        , onClick (context (SelectSkillUpgrade skill))
+        ]
         [ viewUpgradeLines side skill isSelected
         , if isSelected then
             viewUpgradeCheckmark skill
@@ -80,13 +85,15 @@ viewUpgrade context side skill upgradePair isSelected isSiblingSelected selected
         ]
 
 
+
 -- @todo text parsing / formatting / tooltipping in here
+
+
 viewSkillDescription : String -> Html msg
 viewSkillDescription description =
-    dd [ ]
+    dd []
         [ text description
         ]
-
 
 
 viewUpgradeCheckmark : Skill -> Html msg
@@ -120,4 +127,3 @@ whichTree side =
 
         Right ->
             "right-tree"
-

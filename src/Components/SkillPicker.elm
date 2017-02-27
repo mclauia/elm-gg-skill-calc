@@ -5,7 +5,6 @@ import Types.Heroes as Heroes exposing (..)
 import Types.Skills as Skills exposing (..)
 import Utils.Skills as SkillUtils exposing (..)
 import Utils.Markup exposing (..)
-
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
@@ -21,8 +20,8 @@ type UpgradePath
     | Right
 
 
-update
-    : Action
+update :
+    Action
     -> { a | highlightedSkill : Maybe Skill, selectedUpgrades : List Skill }
     -> ( { a | highlightedSkill : Maybe Skill, selectedUpgrades : List Skill }, Cmd Action )
 update action state =
@@ -41,6 +40,7 @@ update action state =
               }
             , Cmd.none
             )
+
         SkillUpgradeAction upgradeAction ->
             let
                 ( skillUpgradeState, skillUpgradeCmd ) =
@@ -72,6 +72,7 @@ isHighlighted skill mbHighlighted =
         Nothing ->
             False
 
+
 viewSkillPickerNode : (Action -> a) -> String -> String -> Skill -> Bool -> List Skill -> Html a
 viewSkillPickerNode context key heroName skill isHighlighted selectedUpgrades =
     div
@@ -99,7 +100,7 @@ viewSkillPickerNode context key heroName skill isHighlighted selectedUpgrades =
                 []
             ]
         , if isHighlighted then
-            SkillPickerUpgrade.viewSkillPickerUpgrade (\action -> context (SkillUpgradeAction action)) skill.upgrades selectedUpgrades
+            SkillPickerUpgrade.viewSkillPickerUpgrade (context << SkillUpgradeAction) skill.upgrades selectedUpgrades
           else
             text ""
         ]

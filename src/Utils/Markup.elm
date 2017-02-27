@@ -1,5 +1,6 @@
 module Utils.Markup exposing (..)
 
+
 selectedClass : Bool -> String
 selectedClass isSelected =
     if isSelected then
